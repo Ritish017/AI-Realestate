@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+export const dynamic = 'force-dynamic';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { Card } from '@/components/ui/Card';
@@ -12,6 +14,19 @@ import { useProjectStore } from '@/stores/useProjectStore';
 export default function ProjectsPage() {
   const { projects, deleteProject } = useProjectStore();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <PageContainer>
+        <div className="h-64 rounded-3xl bg-neutral-900 animate-pulse border border-neutral-800" />
+      </PageContainer>
+    );
+  }
 
   const filteredProjects = projects.filter(
     (p) =>

@@ -1,6 +1,8 @@
 'use client';
 
-import React from 'react';
+export const dynamic = 'force-dynamic';
+
+import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@/components/layout/PageContainer';
 import { DashboardHero } from '@/features/dashboard/components/DashboardHero';
 import { MetricCards } from '@/features/dashboard/components/MetricCards';
@@ -10,6 +12,20 @@ import { QuickTemplateSelector } from '@/features/dashboard/components/QuickTemp
 import { PlatformAnalyticsSnapshot } from '@/features/dashboard/components/PlatformAnalyticsSnapshot';
 
 export default function DashboardPage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return (
+      <PageContainer className="space-y-10">
+        <div className="h-64 rounded-3xl bg-neutral-900 animate-pulse border border-neutral-800" />
+      </PageContainer>
+    );
+  }
+
   return (
     <PageContainer className="space-y-10">
       {/* Hero Welcome Banner */}
