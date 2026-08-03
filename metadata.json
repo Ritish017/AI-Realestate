@@ -1,0 +1,6 @@
+{
+  "name": "AI Real Estate Video Studio",
+  "description": "Automated real estate video production platform that transforms listing photos into property-faithful cinematic tours, drone showcases, and twilight videos with Gemini Vision & Veo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
