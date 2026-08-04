@@ -34,7 +34,7 @@ const GOALS: GoalOption[] = [
   { id: 'open_house', title: 'Open House Event', description: 'Event date callouts, map directions & walkthrough invitation.', icon: Home, badge: 'Event Driving' },
   { id: 'coming_soon', title: 'Coming Soon Teaser', description: 'Exclusive preview, curiosity hooks & VIP buyer waitlists.', icon: Sparkles, badge: 'VIP Teaser' },
   { id: 'price_reduction', title: 'Price Improvement', description: 'Incredible value highlight, price adjustment urgency.', icon: Tag, badge: 'Urgent Deal' },
-  { id: 'commercial_leasing', title: 'Commercial Leasing', description: 'Corporate branding, foot traffic stats & floor plan focus.', icon: Building2, badge: 'B2B Commercial' },
+  { id: 'commercial', title: 'Commercial Leasing', description: 'Corporate branding, foot traffic stats & floor plan focus.', icon: Building2, badge: 'B2B Commercial' },
   { id: 'rental', title: 'Rental Property', description: 'Lease terms, move-in readiness & neighborhood amenities.', icon: KeyRound, badge: 'Tenant Focus' },
   { id: 'social_growth', title: 'Social Media Growth', description: 'Trending audio sync, TikTok/Reels framing & viral hooks.', icon: Share2, badge: 'Viral Engine' },
 ];

@@ -15,8 +15,8 @@ export const Header: React.FC = () => {
   // Dynamic Breadcrumb title
   const getBreadcrumbTitle = () => {
     if (pathname === '/dashboard') return 'Command Center';
-    if (pathname === '/projects') return 'Projects Hub';
-    if (pathname === '/projects/create') return 'Create AI Project Wizard';
+    if (pathname === '/projects') return 'Campaigns Hub';
+    if (pathname === '/projects/create') return 'Create AI Campaign Wizard';
     if (pathname === '/templates') return 'Production Templates';
     if (pathname === '/brand-kit') return 'Realtor Brand Kit';
     if (pathname === '/media') return 'Media Library & Inspector';

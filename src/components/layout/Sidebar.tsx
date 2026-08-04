@@ -27,8 +27,8 @@ export const Sidebar: React.FC = () => {
 
   const navigationItems = [
     { id: 'dashboard', label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-    { id: 'projects', label: 'Projects', href: '/projects', icon: FolderKanban },
-    { id: 'create', label: 'Create Project', href: '/projects/create', icon: PlusCircle, isHighlight: true },
+    { id: 'projects', label: 'Campaigns Hub', href: '/projects', icon: FolderKanban },
+    { id: 'create', label: 'Create Campaign', href: '/projects/create', icon: PlusCircle, isHighlight: true },
     { id: 'templates', label: 'Templates', href: '/templates', icon: LayoutTemplate },
     { id: 'brand-kit', label: 'Brand Kit', href: '/brand-kit', icon: Sparkles },
     { id: 'media', label: 'Media Library', href: '/media', icon: ImageIcon },

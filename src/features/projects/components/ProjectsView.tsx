@@ -37,7 +37,7 @@ export function ProjectsView() {
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-serif italic text-white font-bold">Projects Hub</h1>
+          <h1 className="text-2xl sm:text-3xl font-serif italic text-white font-bold">Campaigns Hub</h1>
           <p className="text-xs text-neutral-400">Manage and preview all your active AI real estate video marketing campaigns.</p>
         </div>
 

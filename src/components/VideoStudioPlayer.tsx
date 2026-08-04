@@ -377,6 +377,43 @@ export const VideoStudioPlayer: React.FC<VideoStudioPlayerProps> = ({
               ctx.fillStyle = '#a3a3a3';
               ctx.font = '12px sans-serif';
               ctx.fillText(`${job?.listingInfo?.price || '$6,850,000'} • Call ${brandKit.agentPhone}`, 40, ltY + 68);
+
+              // Animated Floating Property Feature Glass Card (Top Left)
+              const cardWidth = Math.min(260, canvas.width * 0.4);
+              const cardHeight = 44;
+              const cardX = 24;
+              const cardY = 24;
+
+              let featureTitle = job?.scenes?.[currentSceneIndex]?.sceneType || 'Luxury Highlight';
+              let featureDetail = `${job?.listingInfo?.bedrooms || 5} Beds • ${job?.listingInfo?.bathrooms || 6} Baths`;
+
+              if (currentSceneIndex === 0) {
+                featureTitle = 'Featured Listing';
+                featureDetail = job?.listingInfo?.title || 'Luxury Estate';
+              } else if (currentSceneIndex === 1) {
+                featureTitle = 'Bedrooms & Living';
+                featureDetail = `${job?.listingInfo?.bedrooms || 5} Bedrooms • ${job?.listingInfo?.sqft || 7200} Sq Ft`;
+              } else if (currentSceneIndex === 2) {
+                featureTitle = 'Gourmet Kitchen & Dining';
+                featureDetail = 'Chef Appliances & Custom Marble';
+              }
+
+              // Glass Background
+              ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+              ctx.beginPath();
+              ctx.roundRect(cardX, cardY, cardWidth, cardHeight, 10);
+              ctx.fill();
+              ctx.strokeStyle = 'rgba(245, 158, 11, 0.4)';
+              ctx.lineWidth = 1;
+              ctx.stroke();
+
+              ctx.fillStyle = '#f59e0b';
+              ctx.font = 'bold 10px sans-serif';
+              ctx.fillText(featureTitle.toUpperCase(), cardX + 14, cardY + 18);
+
+              ctx.fillStyle = '#ffffff';
+              ctx.font = 'bold 12px sans-serif';
+              ctx.fillText(featureDetail, cardX + 14, cardY + 34);
             }
           }
         }

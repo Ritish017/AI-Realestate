@@ -1,4 +1,19 @@
-export type VideoStyleId = 'tour' | 'drone' | 'twilight' | 'luxury' | 'modern' | 'minimal';
+export type VideoStyleId =
+  | 'tour'
+  | 'drone'
+  | 'twilight'
+  | 'luxury'
+  | 'modern'
+  | 'minimal'
+  | 'cinematic_luxury'
+  | 'luxury_documentary'
+  | 'editorial_magazine'
+  | 'apple_commercial'
+  | 'family_home'
+  | 'open_house'
+  | 'social_reel'
+  | 'commercial_showcase';
+
 export type AspectRatio = '16:9' | '9:16' | '1:1';
 export type ProjectStatus = 'draft' | 'analyzing' | 'storytelling' | 'rendering' | 'completed' | 'error';
 export type PosterStyle = 'editorial' | 'glassmorphism' | 'modern_gold';
@@ -28,17 +43,29 @@ export type CameraMotion =
   | 'High-Altitude Flyover'
   | 'Low-Angle Glide';
 
-export type MarketingGoal =
-  | 'sell_quickly'
-  | 'luxury_buyers'
-  | 'generate_leads'
-  | 'investment'
+export type CampaignGoal =
+  | 'just_listed'
+  | 'luxury_showcase'
   | 'open_house'
   | 'coming_soon'
-  | 'price_reduction'
-  | 'commercial_leasing'
+  | 'sold'
+  | 'investment'
   | 'rental'
-  | 'social_growth';
+  | 'commercial';
+
+export type MarketingGoal = CampaignGoal | 'sell_quickly' | 'luxury_buyers' | 'generate_leads' | 'price_reduction' | 'social_growth';
+
+export type PropertyCategory = 'House' | 'Condo' | 'Townhouse' | 'Villa' | 'Apartment' | 'Commercial';
+
+export type CallToAction = 'Book a Private Tour' | 'Contact Me Today' | 'Schedule a Showing';
+
+export interface PropertyFeatureCard {
+  id: string;
+  title: string; // e.g. "4 Bedrooms"
+  subtitle?: string; // e.g. "Master Suite with Ocean View"
+  iconName?: string;
+  displayTimeSeconds?: number;
+}
 
 export interface PropertyListingInfo {
   title: string;
@@ -51,6 +78,8 @@ export interface PropertyListingInfo {
   mlsUrl?: string;
   mlsNumber?: string;
   propertyType?: string;
+  propertyCategory?: PropertyCategory;
+  cta?: CallToAction;
   luxuryLevel?: number; // 0-100
   amenities?: string[];
   schools?: string;
@@ -75,6 +104,7 @@ export interface PropertyPhoto {
   isBlurry?: boolean;
   reason?: string;
   twilightUrl?: string;
+  isRecommendedCover?: boolean;
 }
 
 export interface BrandKit {
@@ -239,6 +269,11 @@ export interface MarketingPackage {
 export interface VideoJob {
   id: string;
   title: string;
+  campaignGoal?: CampaignGoal;
+  propertyCategory?: PropertyCategory;
+  coverPhotoId?: string;
+  cta?: CallToAction;
+  featureCards?: PropertyFeatureCard[];
   listingInfo: PropertyListingInfo;
   style: VideoStyleId;
   marketingGoal?: MarketingGoal;
@@ -274,4 +309,7 @@ export interface ProductionTemplate {
   style: VideoStyleId;
   previewUrl: string;
   recommendedPhotoTypes: string;
+  durationText?: string;
+  mood?: string;
+  cameraStyle?: string;
 }
