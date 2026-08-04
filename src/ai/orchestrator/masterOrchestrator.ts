@@ -70,7 +70,7 @@ export class MasterAIOrchestrator {
     const brand = await runBrandDirectorAI(memory.brandKit);
 
     // 10. Marketing Director AI
-    const marketing = await runMarketingDirectorAI(memory.listingInfo);
+    const marketing = await runMarketingDirectorAI(memory.listingInfo, 'sell_quickly', memory.brandKit);
 
     // 11. QA Director AI
     const qa = await runQADirectorAI();
@@ -79,7 +79,7 @@ export class MasterAIOrchestrator {
     const exportConfig = await runExportDirectorAI();
 
     // Store social captions in memory
-    this.memoryManager.updateSocialCaptions(marketing.result);
+    this.memoryManager.updateSocialCaptions(marketing.socialCaptions);
 
     const completedJob: VideoJob = {
       id: memory.projectId,
@@ -94,7 +94,9 @@ export class MasterAIOrchestrator {
       scenes: cinema.result,
       musicTrack: music.result,
       brandKit: brand.result,
-      captions: marketing.result,
+      captions: marketing.socialCaptions,
+      marketingPackage: marketing.marketingPackage,
+      thumbnails: marketing.thumbnails,
       createdAt: 'Just now',
     };
 

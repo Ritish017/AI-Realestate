@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { VideoJob, PropertyPhoto, BrandKit, MusicTrack, SocialCaptions, AspectRatio } from '../types';
 import { generateVeoPrompt } from '../utils/promptGenerator';
+import { DirectorsCutModal } from '../features/preview/components/DirectorsCutModal';
+import { HeyGenAvatarStudio } from '../features/voice/components/HeyGenAvatarStudio';
+import { ElevenLabsVoiceStudio } from '../features/voice/components/ElevenLabsVoiceStudio';
+import { IntelligentThumbnailSelector } from '../features/preview/components/IntelligentThumbnailSelector';
 import { 
   Play, 
   Pause, 
@@ -863,6 +867,18 @@ export const VideoStudioPlayer: React.FC<VideoStudioPlayerProps> = ({
         </div>
 
       </div>
+
+      {/* AI Director's Cut Self-Critique Modal Panel */}
+      <DirectorsCutModal />
+
+      {/* HeyGen AI Realtor Avatar Studio Panel */}
+      <HeyGenAvatarStudio />
+
+      {/* ElevenLabs Voice Narration Studio Panel */}
+      <ElevenLabsVoiceStudio />
+
+      {/* Intelligent Thumbnail AI Selector */}
+      <IntelligentThumbnailSelector />
     </div>
   );
 };
