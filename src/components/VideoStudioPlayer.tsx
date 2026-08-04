@@ -162,34 +162,35 @@ export const VideoStudioPlayer: React.FC<VideoStudioPlayerProps> = ({
     ctx.fillText((brandKit.brokerageName || 'Premiere Realty').toUpperCase(), pX + pWidth - 24, badgeY + 17);
     ctx.textAlign = 'left';
 
-    // Agent Profile Headshot Image
+    // Agent Profile / Team Photo Image
     const agentImg = new Image();
     agentImg.crossOrigin = 'anonymous';
     agentImg.src = brandKit.agentPhotoUrl || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80';
 
-    const avatarSize = Math.min(80, canvas.width * 0.16);
+    const avatarWidth = Math.min(110, canvas.width * 0.22);
+    const avatarHeight = Math.min(80, canvas.height * 0.16);
     const avatarX = pX + 28;
     const avatarY = pY + 70;
 
     if (agentImg.complete) {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2, 0, Math.PI * 2);
+      ctx.roundRect(avatarX, avatarY, avatarWidth, avatarHeight, 14);
       ctx.closePath();
       ctx.clip();
-      ctx.drawImage(agentImg, avatarX, avatarY, avatarSize, avatarSize);
+      ctx.drawImage(agentImg, avatarX, avatarY, avatarWidth, avatarHeight);
       ctx.restore();
 
-      // Gold Ring Around Avatar
+      // Gold Frame Around Avatar / Team Photo
       ctx.strokeStyle = '#f59e0b';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(avatarX + avatarSize / 2, avatarY + avatarSize / 2, avatarSize / 2 + 1, 0, Math.PI * 2);
+      ctx.roundRect(avatarX, avatarY, avatarWidth, avatarHeight, 14);
       ctx.stroke();
     }
 
     // Agent Information
-    const infoX = avatarX + avatarSize + 18;
+    const infoX = avatarX + avatarWidth + 18;
     const infoY = avatarY + 15;
 
     ctx.fillStyle = '#f59e0b';

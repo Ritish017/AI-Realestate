@@ -1,11 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useProjectStore } from '@/stores/useProjectStore';
 import { ElevenLabsVoiceId } from '@/types/domain';
+import { generateElevenLabsNarration } from '@/services/elevenLabsService';
 import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Mic, Volume2, Check } from 'lucide-react';
+import { Textarea } from '@/components/ui/Input';
+import { Mic, Volume2, Check, Sparkles, RefreshCw, Play } from 'lucide-react';
 
 const VOICES: { id: ElevenLabsVoiceId; name: string; desc: string }[] = [
   { id: 'luxury_female', name: 'Luxury Female (Rachel)', desc: 'Sophisticated, elegant voice for high-end luxury estates.' },
@@ -22,6 +25,29 @@ export function ElevenLabsVoiceStudio() {
   const config = currentProject?.voiceConfig;
   const activeVoice = config?.voiceId || 'luxury_female';
 
+  const defaultScript =
+    config?.narrationScript ||
+    `Welcome to ${currentProject?.listingInfo.title || 'this luxury residence'}. Offered at ${currentProject?.listingInfo.price || '$6,850,000'}. Featuring ${currentProject?.listingInfo.bedrooms || 5} bedrooms, ${currentProject?.listingInfo.bathrooms || 6} luxury bathrooms, and architectural perfection throughout.`;
+
+  const [script, setScript] = useState(defaultScript);
+  const [isSynthesizing, setIsSynthesizing] = useState(false);
+  const [generatedAudioUrl, setGeneratedAudioUrl] = useState<string | null>(config?.audioUrl || null);
+
+  const handleGenerateVoice = async () => {
+    setIsSynthesizing(true);
+    const result = await generateElevenLabsNarration(script, activeVoice);
+    setIsSynthesizing(false);
+    if (result.success) {
+      setGeneratedAudioUrl(result.audioUrl);
+      setVoiceConfig({
+        voiceId: activeVoice,
+        narrationScript: script,
+        audioUrl: result.audioUrl,
+        syncDurationSeconds: result.durationEstimateSeconds,
+      });
+    }
+  };
+
   return (
     <Card variant="glass" className="p-6 space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -32,15 +58,26 @@ export function ElevenLabsVoiceStudio() {
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-serif italic text-white font-bold">ElevenLabs Voice Studio</h3>
-              <Badge variant="gold" size="sm">Frame Duration Auto-Sync</Badge>
+              <Badge variant="gold" size="sm">Studio Multilingual v2</Badge>
             </div>
             <p className="text-xs text-neutral-400">
-              Professional AI voice narration automatically synchronized to scene timing.
+              Type custom speech text below to generate realistic studio-grade voice narration synchronized to video.
             </p>
           </div>
         </div>
+
+        <Button
+          variant="gold"
+          size="sm"
+          isLoading={isSynthesizing}
+          leftIcon={<Sparkles className="w-4 h-4" />}
+          onClick={handleGenerateVoice}
+        >
+          Synthesize AI Speech
+        </Button>
       </div>
 
+      {/* Voice Selection Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {VOICES.map((v) => {
           const isSelected = activeVoice === v.id;
@@ -48,7 +85,9 @@ export function ElevenLabsVoiceStudio() {
             <Card
               key={v.id}
               variant={isSelected ? 'gold' : 'glass'}
-              onClick={() => setVoiceConfig({ voiceId: v.id, voiceName: v.name })}
+              onClick={() => {
+                setVoiceConfig({ voiceId: v.id, voiceName: v.name });
+              }}
               className={`p-4 cursor-pointer transition-all duration-200 ${
                 isSelected ? 'ring-2 ring-amber-400 bg-amber-500/10' : 'hover:border-neutral-700'
               }`}
@@ -65,6 +104,37 @@ export function ElevenLabsVoiceStudio() {
           );
         })}
       </div>
+
+      {/* Custom Narration Script Input */}
+      <div className="space-y-3 pt-2">
+        <label className="text-xs font-semibold text-neutral-300 block">
+          Custom Narration Speech Text
+        </label>
+        <Textarea
+          value={script}
+          onChange={(e) => {
+            setScript(e.target.value);
+            setVoiceConfig({ narrationScript: e.target.value });
+          }}
+          rows={3}
+          placeholder="Type the exact narration speech you want ElevenLabs to speak..."
+          className="text-xs font-mono"
+        />
+      </div>
+
+      {/* Generated Audio Player Preview */}
+      {generatedAudioUrl && (
+        <div className="p-4 rounded-2xl bg-neutral-900 border border-neutral-800 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Volume2 className="w-5 h-5 text-amber-400 animate-pulse" />
+            <div>
+              <p className="text-xs font-bold text-white">Generated ElevenLabs Audio Track</p>
+              <p className="text-[10px] text-neutral-400 font-mono">Synced to ~{Math.ceil(script.split(' ').length / 2.5)}s duration</p>
+            </div>
+          </div>
+          <audio controls src={generatedAudioUrl} className="h-8 max-w-xs" />
+        </div>
+      )}
     </Card>
   );
 }
